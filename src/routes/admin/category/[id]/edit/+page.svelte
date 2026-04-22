@@ -1,8 +1,8 @@
-<h1>Add New Category</h1>
+<h1>Edit Category</h1>
 
-<form method="POST" action="?/create">
-	<input type="text" name="name" required />
-	<button>Create</button>
+<form method="POST" action="?/edit">
+	<input type="text" name="name" value={data.category.name} required />
+	<button type="submit">Update</button>
 </form>
 
 <style>
@@ -12,9 +12,9 @@
 	}
 
 	form {
-		max-width: 420px;
+		max-width: 400px;
 		background: #ffffff;
-		padding: 40px;
+		padding: 15px;
 		border-radius: 8px;
 		border: 1px solid #e5e7eb;
 	}
@@ -28,10 +28,11 @@
 	}
 
 	button {
-		background: #16a34a;
+		background: #2563eb;
 		color: white;
 		border: none;
 		padding: 8px 14px;
 		border-radius: 6px;
+		cursor: pointer;
 	}
 </style>
