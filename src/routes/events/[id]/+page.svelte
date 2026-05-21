@@ -3,11 +3,13 @@
 </script>
 
 <div class="event-card">
+	{#if data.event.image_url}
+		<img src={data.event.image_url} alt={data.event.name} class="event-img" />
+	{/if}
+
 	<h1 class="title">{data.event.name}</h1>
 
-	<p class="description">
-		{data.event.description}
-	</p>
+	<p class="description">{data.event.description}</p>
 
 	<div class="date-time">
 		<span>📅 {data.event.startdate}</span>
@@ -22,6 +24,14 @@
 		padding: 20px;
 		border-radius: 10px;
 		border: 1px solid #e5e7eb;
+	}
+
+	.event-img {
+		width: 100%;
+		max-height: 300px;
+		object-fit: cover;
+		border-radius: 8px;
+		margin-bottom: 16px;
 	}
 
 	.title {

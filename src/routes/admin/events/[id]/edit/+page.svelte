@@ -25,6 +25,18 @@
 		<input type="time" name="starttime" required value={data.event.starttime} />
 	</label>
 
+	<label>
+		Category
+		<select name="category_id">
+			<option value="">— Keine Kategorie —</option>
+			{#each data.categories as category}
+				<option value={category.id} selected={category.id === data.event.category_id}>
+					{category.name}
+				</option>
+			{/each}
+		</select>
+	</label>
+
 	<button type="submit">Update Event</button>
 </form>
 
@@ -49,7 +61,8 @@
 	}
 
 	input,
-	textarea {
+	textarea,
+	select {
 		width: 100%;
 		padding: 8px;
 		margin-top: 6px;

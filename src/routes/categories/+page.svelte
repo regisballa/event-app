@@ -1,5 +1,5 @@
 <script>
-	let { data } = $props();
+	let { data, form } = $props();
 </script>
 
 <h1>Manage Categories</h1>
@@ -8,11 +8,15 @@
 	<button>Add New Category</button>
 </a>
 
+{#if form?.error}
+	<p class="error">{form.error}</p>
+{/if}
+
 {#each data.categories as { id, name }}
 	<div class="category">
 		<p>{name}</p>
 
-		<a href={`/admin/category/${id}`}>
+		<a href={`/admin/category/${id}/edit`}>
 			<button>Edit</button>
 		</a>
 
@@ -48,6 +52,7 @@
 		background: #2563eb;
 		color: white;
 		margin-right: 5px;
+		cursor: pointer;
 	}
 
 	.delete {
@@ -56,5 +61,15 @@
 
 	form {
 		display: inline;
+	}
+
+	.error {
+		background: #fee2e2;
+		border: 1px solid #fca5a5;
+		color: #b91c1c;
+		padding: 10px 14px;
+		border-radius: 6px;
+		margin-bottom: 16px;
+		font-weight: 500;
 	}
 </style>

@@ -1,3 +1,7 @@
+<script>
+	let { data } = $props();
+</script>
+
 <h1>Edit Category</h1>
 
 <form method="POST" action="?/edit">

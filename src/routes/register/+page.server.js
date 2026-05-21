@@ -4,7 +4,6 @@ import { hashPassword, createSession } from '$lib/server/auth.js';
 
 export const actions = {
 	register: async ({ request, cookies }) => {
-		// GET DATA
 		const form = await request.formData();
 		const username = form.get('username');
 		const password = form.get('password');
@@ -19,22 +18,22 @@ export const actions = {
 				username,
 				await hashPassword(password)
 			]);
-			console.log(result);
 		} catch (err) {
-			console.log(err);
 			if (err.code === 'ER_DUP_ENTRY') {
-				return fail(400, { error: 'Username is already taken !' });
+				return fail(400, { error: 'Username ist bereits vergeben.' });
 			}
+			return fail(500, { error: 'Registrierung fehlgeschlagen. Bitte erneut versuchen.' });
 		}
 
-		// Create Session
+		// result ist hier garantiert definiert
 		const sessionId = await createSession(result.insertId);
 		cookies.set('session', sessionId, {
 			path: '/',
+			httpOnly: true,
+			sameSite: 'strict',
 			maxAge: 60 * 60 * 24 * 30
 		});
 
-		// Redirect
-		redirect(303, '/admin/events');
+		throw redirect(303, '/admin/events');
 	}
 };

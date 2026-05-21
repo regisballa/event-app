@@ -2,16 +2,19 @@ import pool from '$lib/server/database.js';
 import { redirect } from '@sveltejs/kit';
 
 export async function load({ params, locals }) {
-	if (!locals.user) redirect(303, '/login');
+	if (!locals.user) throw redirect(303, '/login');
 	const id = params.id;
 	const [rows] = await pool.execute('SELECT * FROM event WHERE id = ?', [id]);
 
 	if (rows.length === 0) {
-		redirect(303, '/admin/events');
+		throw redirect(303, '/admin/events');
 	}
 
+	const [categories] = await pool.execute('SELECT * FROM categories');
+
 	return {
-		event: rows[0]
+		event: rows[0],
+		categories: categories
 	};
 }
 
@@ -23,10 +26,11 @@ export const actions = {
 		const description = form.get('description');
 		const startdate = form.get('startdate');
 		const starttime = form.get('starttime');
+		const categoryId = form.get('category_id');
 
 		await pool.execute(
-			'UPDATE event SET name = ?, description = ?, startdate = ?, starttime = ? WHERE id = ?',
-			[name, description, startdate, starttime, id]
+			'UPDATE event SET name = ?, description = ?, startdate = ?, starttime = ?, category_id = ? WHERE id = ?',
+			[name, description, startdate, starttime, categoryId || null, id]
 		);
 
 		throw redirect(303, '/admin/events');

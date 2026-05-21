@@ -2,7 +2,7 @@ import pool from '$lib/server/database.js';
 import { redirect } from '@sveltejs/kit';
 
 export async function load({ params, locals }) {
-	if (!locals.user) redirect(303, '/login');
+	if (!locals.user) throw redirect(303, '/login');
 
 	const id = params.id;
 	const [rows] = await pool.execute('SELECT * FROM categories WHERE id = ?', [id]);

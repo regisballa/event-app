@@ -8,9 +8,14 @@
 <div class="events">
 	{#each data.event as event}
 		<a href={'/events/' + event.id} class="event-card">
-			<h3>{event.name}</h3>
-			<p class="desc">{event.description}</p>
-			<span class="category">Category: {event.category_name}</span>
+			{#if event.image_url}
+				<img src={event.image_url} alt={event.name} class="event-img" />
+			{/if}
+			<div class="event-info">
+				<h3>{event.name}</h3>
+				<p class="desc">{event.description}</p>
+				<span class="category">Category: {event.category_name}</span>
+			</div>
 		</a>
 	{/each}
 </div>
@@ -21,7 +26,7 @@
 	{#each data.categories as category}
 		<div class="category-card">
 			<p>{category.name}</p>
-			<a href={`category/${category.id}`}>Edit</a>
+			<a href={`/admin/category/${category.id}/edit`}>Edit</a>
 		</div>
 	{/each}
 </div>
@@ -37,7 +42,6 @@
 		margin-bottom: 20px;
 	}
 
-	/* ===== Events ===== */
 	.events {
 		display: grid;
 		gap: 12px;
@@ -45,20 +49,30 @@
 	}
 
 	.event-card {
-		display: block;
+		display: flex;
+		gap: 16px;
 		padding: 16px;
 		border-radius: 10px;
 		background: white;
 		border: 1px solid #e5e7eb;
 		text-decoration: none;
 		color: inherit;
+		align-items: center;
 	}
 
 	.event-card:hover {
 		background: #f9fafb;
 	}
 
-	.event-card h3 {
+	.event-img {
+		width: 100px;
+		height: 80px;
+		object-fit: cover;
+		border-radius: 8px;
+		flex-shrink: 0;
+	}
+
+	.event-info h3 {
 		margin-bottom: 6px;
 	}
 
@@ -72,7 +86,6 @@
 		color: #6b7280;
 	}
 
-	/* ===== Categories ===== */
 	.space-top {
 		margin-top: 40px;
 	}

@@ -8,6 +8,6 @@ export const actions = {
 			await invalidateSession(sessionId);
 			cookies.delete('session', { path: '/' });
 		}
-		redirect(303, '/');
+		throw redirect(303, '/');
 	}
 };

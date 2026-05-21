@@ -4,7 +4,7 @@
 
 <h1>Add New Event</h1>
 
-<form method="POST" action="?/create" class="event-form">
+<form method="POST" action="?/create" class="event-form" enctype="multipart/form-data">
 	<label>
 		Event Name
 		<input type="text" name="name" required />
@@ -27,11 +27,17 @@
 
 	<label>
 		Category
-		<select name="category_id" required>
+		<select name="category_id">
+			<option value="">— Keine Kategorie —</option>
 			{#each data.categories as category}
 				<option value={category.id}>{category.name}</option>
 			{/each}
 		</select>
+	</label>
+
+	<label>
+		Event Bild
+		<input type="file" name="image" accept="image/*" />
 	</label>
 
 	<button type="submit">Create Event</button>
@@ -78,7 +84,7 @@
 		background: #2563eb;
 		color: white;
 		border: none;
-		padding: 10px;
+		padding: 10px 16px;
 		border-radius: 6px;
 		cursor: pointer;
 		font-weight: 600;
